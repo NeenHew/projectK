@@ -1,0 +1,79 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "rooms": {
+      "$pin": {
+        ".read": "auth != null",
+
+        "meta": {
+          ".write": "auth != null && (!data.exists() || data.child('hostUid').val() === auth.uid)",
+          "hostUid": { ".validate": "newData.isString()" },
+          "status": { ".validate": "newData.val() in ['lobby','running','reveal','ended']" },
+          "questionIndex": { ".validate": "newData.isNumber()" },
+          "questionTotal": { ".validate": "newData.isNumber()" },
+          "questionDurationMs": { ".validate": "newData.isNumber() && newData.val() >= 5000 && newData.val() <= 60000" },
+          "questionStartAt": { ".validate": "newData.val() === null || newData.isNumber()" },
+          "questionEndAt": { ".validate": "newData.val() === null || newData.isNumber()" }
+        },
+
+        "public": {
+          ".read": "auth != null",
+          "playerCount": {
+            ".write": "auth != null", 
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          }
+        },
+
+        "names": {
+          "$nameKey": {
+            ".read": "auth != null",
+            ".write": "auth != null && (!data.exists() || data.child('uid').val() === auth.uid)",
+            "uid": { ".validate": "newData.isString() && newData.val() === auth.uid" }
+          }
+        },
+
+        "players": {
+          "$uid": {
+            ".read": "auth != null",
+            ".write": "auth != null && $uid === auth.uid",
+            "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 18" },
+            "score": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 1000000" },
+            "joinedAt": { ".validate": "newData.val() === now" },
+            "connected": { ".validate": "newData.isBoolean()" }
+          }
+        },
+
+        "answers": {
+          "$qIndex": {
+            "$uid": {
+              ".read": "auth != null && $uid === auth.uid",
+              ".write": "auth != null && $uid === auth.uid && root.child('rooms').child($pin).child('meta').child('status').val() === 'running' && !data.exists()",
+              "choice": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3" },
+              "answeredAt": { ".validate": "newData.isNumber()" }
+            }
+          }
+        },
+
+        "agg": {
+          "$qIndex": {
+            ".read": "auth != null",
+            ".write": "auth != null", 
+            "submitted": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "a": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "b": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "c": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "d": { ".validate": "newData.isNumber() && newData.val() >= 0" }
+          }
+        },
+
+        "top5": {
+          ".read": "auth != null",
+          ".write": "auth != null && root.child('rooms').child($pin).child('meta').child('hostUid').val() === auth.uid"
+        }
+      }
+    }
+  }
+}
+
