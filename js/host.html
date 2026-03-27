@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host · Realtime Quiz</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <meta name="color-scheme" content="dark" />
+  </head>
+  <body>
+    <div class="app shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">Q</div>
+          <div class="brandText">
+            <div class="brandName">Host</div>
+            <div class="brandSub">Create a room · control questions</div>
+          </div>
+        </div>
+        <div class="row gapSm wrap">
+          <a class="pillLink" href="./index.html">Home</a>
+          <a class="pillLink" href="./player.html">Player</a>
+        </div>
+      </header>
+
+      <main class="stack gapLg">
+        <section class="card">
+          <div class="row spaceBetween wrap gapMd">
+            <div class="stack gapSm">
+              <div class="muted">Room PIN</div>
+              <div id="roomPin" class="pin mono">------</div>
+              <div class="row gapSm wrap">
+                <span class="badge"><span class="dot"></span><span id="playerCount">0</span> players</span>
+                <span class="badge">Answers: <b id="answersCount">0</b></span>
+                <span class="badge">Question: <b id="qIndex">-</b>/<span id="qTotal">-</span></span>
+                <span class="badge">Phase: <b id="phase">-</b></span>
+                <span class="badge">Time: <b id="timeLeft">--</b>s</span>
+              </div>
+            </div>
+            <div class="stack gapSm" style="min-width:260px">
+              <canvas id="qrCanvas" width="210" height="210" style="border-radius:14px"></canvas>
+              <div class="muted" style="font-size:12px">
+                Scan to join: <span id="joinUrl" class="mono"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hostLayout">
+          <section class="card stack gapMd">
+            <div class="row spaceBetween wrap gapMd">
+              <div class="stack gapSm">
+                <h2 id="questionText">Create a room to begin</h2>
+                <div class="muted" id="questionMeta">—</div>
+              </div>
+              <div class="row gapSm wrap">
+                <button id="btnCreate" class="btn primary">Create Room</button>
+                <button id="btnStart" class="btn good" disabled>Start</button>
+                <button id="btnNext" class="btn" disabled>Next</button>
+                <button id="btnReset" class="btn danger" disabled>Reset</button>
+              </div>
+            </div>
+
+            <div class="canvasWrap">
+              <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="row gapMd wrap">
+              <div class="card" style="flex:1; padding:14px">
+                <h3>Top 5</h3>
+                <table class="table">
+                  <thead>
+                    <tr><th>#</th><th>Name</th><th>Score</th></tr>
+                  </thead>
+                  <tbody id="top5Body">
+                    <tr><td colspan="3" class="muted">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card" style="flex:1; padding:14px">
+                <h3>Players</h3>
+                <div class="muted" id="playersList">—</div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="card stack gapMd">
+            <h2>Host notes</h2>
+            <ul class="list">
+              <li>Players join from their phones.</li>
+              <li>Chart updates live as answers come in.</li>
+              <li>Timer is synced via Firebase server timestamp.</li>
+            </ul>
+
+            <div class="card" style="padding:14px">
+              <h3>Room status</h3>
+              <div class="kv">
+                <div class="muted">Room path</div>
+                <div class="mono" id="roomPath">—</div>
+                <div class="muted">Your UID</div>
+                <div class="mono" id="myUid">—</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+
+      <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script type="module" src="./js/host.js"></script>
+  </body>
+</html>
+
