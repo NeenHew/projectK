@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realtime Quiz</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <meta name="color-scheme" content="dark" />
+  </head>
+  <body>
+    <div class="app shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">Q</div>
+          <div class="brandText">
+            <div class="brandName">Realtime Quiz</div>
+            <div class="brandSub">Kahoot-style · Firebase Realtime DB</div>
+          </div>
+        </div>
+        <a class="pillLink" href="./host.html">Host</a>
+      </header>
+
+      <main class="stack gapLg">
+        <section class="card hero">
+          <h1>Join or Host a live quiz</h1>
+          <p class="muted">
+            Players join with a <b>PIN</b> (or scan QR). Host controls the flow.
+          </p>
+          <div class="row gapMd wrap">
+            <a class="btn primary" href="./player.html">Join as Player</a>
+            <a class="btn" href="./host.html">Host a Room</a>
+          </div>
+        </section>
+
+        <section class="grid2 gapLg">
+          <div class="card">
+            <h2>Player</h2>
+            <ul class="list">
+              <li>Enter name + PIN</li>
+              <li>Big A–D buttons</li>
+              <li>One answer per question</li>
+            </ul>
+            <a class="btn full" href="./player.html">Open Player</a>
+          </div>
+
+          <div class="card">
+            <h2>Host</h2>
+            <ul class="list">
+              <li>Create room PIN</li>
+              <li>Live answer chart</li>
+              <li>Next / Reset controls</li>
+            </ul>
+            <a class="btn full" href="./host.html">Open Host</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Setup note</h2>
+          <p class="muted">
+            You must create <code>public/js/firebase-config.js</code> with your Firebase
+            web config. See <code>README.md</code>.
+          </p>
+        </section>
+      </main>
+
+      <footer class="footer muted">
+        Built for simple demos · No custom server
+      </footer>
+    </div>
+  </body>
+</html>
+
